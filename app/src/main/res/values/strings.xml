@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Notika</string>
+    <string name="sign_up_today">Sign up Today</string>
+    <string name="user_name">User name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="have_an_account_login_here">Have an account? Login here</string>
+    <string name="first_time_sign_up_here">First time? Sign up here</string>
+    <string name="login">Login</string>
 </resources>
