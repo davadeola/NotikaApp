@@ -5,8 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
-    android:padding="32dp"
     android:orientation="vertical">
+
+
+    <include layout="@layout/toolbar_layout"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp">
 
     <TextView
         android:id="@+id/login_textview"
@@ -39,7 +48,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:layout_marginBottom="32dp"/>
+        android:layout_marginBottom="32dp"
+        android:text=""/>
 
     <TextView
         android:id="@+id/password_textView"
@@ -53,18 +63,20 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:text=""/>
 
-    <Button
-        android:id="@+id/button_login"
-        android:layout_gravity="end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="@string/login"
-        android:background="@color/colorAccent"/>
+        <Button
+            android:id="@+id/button_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary"
+            android:padding="8dp"
+            android:text="@string/login"
+            android:textColor="@color/colorPrimaryText" />
 
-    <TextView
+        <TextView
         android:id="@+id/login_signupLink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -73,6 +85,13 @@
         android:textStyle="bold"
         android:layout_marginTop="32dp"
         android:onClick="launchSignUp"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 
 </LinearLayout>

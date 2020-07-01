@@ -5,8 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignUpActivity"
-    android:orientation="vertical"
-    android:padding="32dp">
+    android:orientation="vertical">
+
+
+    <include layout="@layout/toolbar_layout"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp">
 
     <TextView
         android:id="@+id/signup_textView"
@@ -85,11 +94,12 @@
 
     <Button
         android:id="@+id/button_signup"
-        android:layout_gravity="end"
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:text="@string/sign_up"
+        android:textColor="@color/colorLightPrimary"
         android:background="@color/colorAccent"/>
 
 
@@ -103,4 +113,5 @@
         android:layout_marginTop="32dp"
         android:onClick="launchLogin"/>
 
+    </LinearLayout>
 </LinearLayout>

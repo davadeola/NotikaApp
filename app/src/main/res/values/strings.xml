@@ -9,4 +9,7 @@
     <string name="have_an_account_login_here">Have an account? Login here</string>
     <string name="first_time_sign_up_here">First time? Sign up here</string>
     <string name="login">Login</string>
+    <string name="wrong_credentials">Wrong Credentials</string>
+    <string name="already_in_use">Email already in use</string>
+    <string name="something_went_wrong">Something went wrong please try again</string>
 </resources>
