@@ -1,6 +1,9 @@
 package com.example.notika.services.models;
 
-public class Notes {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Notes implements Parcelable {
     private String title;
     private String body;
     private String category;
@@ -8,6 +11,28 @@ public class Notes {
     private String noteId;
     private String createdAt;
     private String lastEdited;
+
+    protected Notes(Parcel in) {
+        title = in.readString();
+        body = in.readString();
+        category = in.readString();
+        author = in.readString();
+        noteId = in.readString();
+        createdAt = in.readString();
+        lastEdited = in.readString();
+    }
+
+    public static final Creator<Notes> CREATOR = new Creator<Notes>() {
+        @Override
+        public Notes createFromParcel(Parcel in) {
+            return new Notes(in);
+        }
+
+        @Override
+        public Notes[] newArray(int size) {
+            return new Notes[size];
+        }
+    };
 
     public String getTitle() {
         return title;
@@ -35,5 +60,23 @@ public class Notes {
 
     public String getNoteId() {
         return noteId;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+
+        dest.writeString(title);
+        dest.writeString(body);
+        dest.writeString(category);
+        dest.writeString(author);
+        dest.writeString(noteId);
+        dest.writeString(createdAt);
+        dest.writeString(lastEdited);
     }
 }

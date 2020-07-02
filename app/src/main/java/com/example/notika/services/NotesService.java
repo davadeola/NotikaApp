@@ -4,6 +4,7 @@ import com.example.notika.services.models.Notes;
 import com.example.notika.services.models.Token;
 import com.example.notika.services.models.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -30,6 +31,6 @@ public interface NotesService {
     Call<Token> signup(@Body User newUser);
 
     @GET("notes")
-    Call<List<Notes>> getNotes(@Header("Authorization") String authorization);
+    Call<ArrayList<Notes>> getNotes(@Header("Authorization") String authorization);
 
 }

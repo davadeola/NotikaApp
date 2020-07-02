@@ -24,7 +24,7 @@ public class ServiceBuilder {
 
 
     //create OKHttp client and merge the logger
-    public static OkHttpClient.Builder okHttp = new OkHttpClient.Builder()
+    private static OkHttpClient.Builder okHttp = new OkHttpClient.Builder()
             .addInterceptor(logger);
 //            .addInterceptor(new TokenRenewInterceptor());
 

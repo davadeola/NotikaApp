@@ -13,13 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.notika.R;
 import com.example.notika.services.models.Notes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
-    private List<Notes> notesList;
+    private ArrayList<Notes> notesList;
     private Context context;
 
-    public NotesAdapter(List<Notes> notesList, Context context){
+    public NotesAdapter(ArrayList<Notes> notesList, Context context){
         this.notesList = notesList;
         this.context = context;
     }

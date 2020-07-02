@@ -72,13 +72,12 @@ public class LoginActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.INVISIBLE);
                         if (response.isSuccessful()){
 
-                            Intent i  = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(i);
-
                             TokenRenewInterceptor.saveToken(response.body().getToken(), getApplicationContext());
 
-                            String  token = TokenRenewInterceptor.getToken(getApplicationContext());
+                            String token = TokenRenewInterceptor.getToken(getApplicationContext());
 
+                            Intent i  = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(i);
 
 
                         }else if(response.code() == 400) {
