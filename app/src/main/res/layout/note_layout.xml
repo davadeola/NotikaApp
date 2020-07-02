@@ -12,19 +12,21 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_margin="32dp"
-
         >
+
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Untitled"
             android:layout_weight="5"
+            android:id="@+id/note_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
 
         <View
             android:layout_width="8dp"
             android:layout_height="match_parent"
+            android:id="@+id/category_banner"
             android:background="@color/colorPrimary"/>
 
 

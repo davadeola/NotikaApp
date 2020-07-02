@@ -14,6 +14,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface NotesService {
 
@@ -28,7 +29,7 @@ public interface NotesService {
     @POST("signup")
     Call<Token> signup(@Body User newUser);
 
-    @GET("notes/{username}")
+    @GET("notes")
     Call<List<Notes>> getNotes(@Header("Authorization") String authorization);
 
 }

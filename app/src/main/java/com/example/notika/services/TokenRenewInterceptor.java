@@ -56,6 +56,7 @@ public class TokenRenewInterceptor implements Interceptor {
         SharedPreferences sharedPreferences = context.getSharedPreferences(myPreference, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("token", token);
+
         editor.apply();
     }
 
@@ -64,8 +65,6 @@ public class TokenRenewInterceptor implements Interceptor {
         SharedPreferences sharedPreferences = context.getSharedPreferences(myPreference, Context.MODE_PRIVATE);
         String gottenToken = sharedPreferences.getString("token", "");
 
-        Log.d("InRenew", gottenToken);
-        savedToken = gottenToken;
 
         return gottenToken;
     }
