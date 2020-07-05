@@ -15,8 +15,6 @@ import com.example.notika.services.ServiceBuilder;
 import com.example.notika.services.models.Token;
 import com.example.notika.services.models.User;
 
-import java.io.IOException;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,7 +63,7 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onResponse(Call<Token> call, Response<Token> response) {
                         if (response.isSuccessful()){
 
-                            Intent i  = new Intent(SignUpActivity.this, UploadProfileActivity.class);
+                            Intent i  = new Intent(SignUpActivity.this, AddNoteActivity.class);
                             startActivity(i);
                                 Log.d("Token", response.body().getToken());
 

@@ -12,4 +12,6 @@
     <string name="wrong_credentials">Wrong Credentials</string>
     <string name="already_in_use">Email already in use</string>
     <string name="something_went_wrong">Something went wrong please try again</string>
+    <string name="title">Title</string>
+    <string name="enter_your_new_note_here">Enter your new note here</string>
 </resources>

@@ -40,9 +40,10 @@ public class TokenRenewInterceptor implements Authenticator {
         SharedPreferences sharedPreferences = context.getSharedPreferences(myPreference, Context.MODE_PRIVATE);
         String gottenToken = sharedPreferences.getString("token", "");
 
-
         return gottenToken;
     }
+
+
 
 
     private void setAuthHeader(Request.Builder builder, String token) {

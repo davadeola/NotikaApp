@@ -1,5 +1,6 @@
 package com.example.notika.services.models;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,6 +12,7 @@ public class Notes implements Parcelable {
     private String noteId;
     private String createdAt;
     private String lastEdited;
+    private boolean favorite;
 
     protected Notes(Parcel in) {
         title = in.readString();
@@ -20,6 +22,8 @@ public class Notes implements Parcelable {
         noteId = in.readString();
         createdAt = in.readString();
         lastEdited = in.readString();
+        favorite = in.readInt() != 0;
+
     }
 
     public static final Creator<Notes> CREATOR = new Creator<Notes>() {
@@ -62,6 +66,8 @@ public class Notes implements Parcelable {
         return noteId;
     }
 
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -78,5 +84,10 @@ public class Notes implements Parcelable {
         dest.writeString(noteId);
         dest.writeString(createdAt);
         dest.writeString(lastEdited);
+        dest.writeInt(favorite ? 1 : 0);
+    }
+
+    public boolean isFavorite() {
+        return favorite;
     }
 }

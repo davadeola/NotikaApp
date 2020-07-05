@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
@@ -19,15 +20,24 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Untitled"
-            android:layout_weight="5"
+            android:layout_weight="4"
             android:id="@+id/note_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+
+        <ImageView
+            android:id="@+id/favorite_toggle_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_baseline_star_border_24" />
 
         <View
             android:layout_width="8dp"
             android:layout_height="match_parent"
             android:id="@+id/category_banner"
             android:background="@color/colorPrimary"/>
+
+
 
 
     </LinearLayout>

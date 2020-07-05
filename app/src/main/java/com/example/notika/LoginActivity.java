@@ -18,8 +18,12 @@ import android.widget.Toast;
 import com.example.notika.services.NotesService;
 import com.example.notika.services.ServiceBuilder;
 import com.example.notika.services.TokenRenewInterceptor;
+import com.example.notika.services.models.Notes;
 import com.example.notika.services.models.Token;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -76,8 +80,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             String token = TokenRenewInterceptor.getToken(getApplicationContext());
 
-                            Intent i  = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(i);
+                            getNotes(token);
 
 
                         }else if(response.code() == 400) {
@@ -109,5 +112,30 @@ public class LoginActivity extends AppCompatActivity {
     public void launchSignUp(View view) {
         Intent i  = new Intent(LoginActivity.this, SignUpActivity.class);
         startActivity(i);
+    }
+
+    public void getNotes(String token){
+        NotesService notesService = ServiceBuilder.buildService(NotesService.class);
+        Call<ArrayList<Notes>> notesCall =  notesService.getNotes(String.format("Bearer %s", token));
+
+
+        notesCall.enqueue(new Callback<ArrayList<Notes>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Notes>> call, Response<ArrayList<Notes>> response) {
+                if (response.isSuccessful()){
+                    ArrayList<Notes> notes = response.body();
+
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putParcelableArrayListExtra("notes", notes);
+                    startActivity(intent);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Notes>> call, Throwable t) {
+                Log.e("NotesError", "Something is wrong");
+            }
+        });
     }
 }

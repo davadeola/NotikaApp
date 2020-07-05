@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,12 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.notika.R;
 import com.example.notika.services.models.Notes;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
     private ArrayList<Notes> notesList;
     private Context context;
+
 
     public NotesAdapter(ArrayList<Notes> notesList, Context context){
         this.notesList = notesList;
@@ -38,7 +46,38 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull NotesAdapter.ViewHolder holder, int position) {
         Notes currentNote = notesList.get(position);
         holder.bind(currentNote);
+        String token = TokenRenewInterceptor.getToken(context);
+        Log.d("Before state", String.valueOf(currentNote.isFavorite()));
 
+        holder.favoriteToggle.setOnClickListener(v -> {
+            NotesService notesService = ServiceBuilder.buildService(NotesService.class);
+            Call<Void> favoriteCall = notesService.favoriteNotes(currentNote.getNoteId(), String.format("Bearer %s", token));
+
+
+
+            favoriteCall.enqueue(new Callback<Void>() {
+
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if (response.isSuccessful()){
+
+                        holder.isFavorite = !holder.isFavorite;
+
+                        holder.favoriteToggle.setImageResource(
+                                holder.isFavorite ? R.drawable.ic_baseline_star_24 : R.drawable.ic_baseline_star_border_24);
+
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    if(t instanceof IOException){
+                        Toast.makeText(context, "Internet connection lost", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        });
 
     }
 
@@ -50,19 +89,29 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView noteTitle;
         private View noteBanner;
+        private ImageView favoriteToggle;
+        private boolean isFavorite;
+        private String noteId;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             noteTitle = itemView.findViewById(R.id.note_title);
             noteBanner = itemView.findViewById(R.id.category_banner);
-
+            favoriteToggle = itemView.findViewById(R.id.favorite_toggle_icon);
 
         }
 
+
+
+
+
         public void bind(Notes currentNote) {
             noteTitle.setText(currentNote.getTitle());
+            isFavorite = currentNote.isFavorite();
 
+            noteId = currentNote.getNoteId();
             int colorCode;
 
             switch (currentNote.getCategory()){
@@ -82,9 +131,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
                     colorCode = R.color.colorPrimaryDark;
             }
 
-            Log.d("Color Code", currentNote.getCategory());
-
             noteBanner.setBackgroundColor(context.getResources().getColor(colorCode));
+
+            favoriteToggle.setImageResource(
+                    isFavorite ? R.drawable.ic_baseline_star_24 : R.drawable.ic_baseline_star_border_24);
         }
+
+
     }
 }

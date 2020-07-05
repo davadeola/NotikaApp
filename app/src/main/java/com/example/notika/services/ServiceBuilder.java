@@ -2,13 +2,16 @@ package com.example.notika.services;
 
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 
+import okhttp3.Authenticator;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.Route;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -22,11 +25,18 @@ public class ServiceBuilder {
     private static HttpLoggingInterceptor logger = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
 
 
-
     //create OKHttp client and merge the logger
     private static OkHttpClient.Builder okHttp = new OkHttpClient.Builder()
+            .authenticator(new Authenticator() {
+                @Nullable
+                @Override
+                public Request authenticate(@Nullable Route route, @NotNull Response response) throws IOException {
+                    
+                    return null;
+                }
+            })
             .addInterceptor(logger);
-//            .addInterceptor(new TokenRenewInterceptor());
+
 
     private static Retrofit.Builder builder = new Retrofit.Builder().baseUrl(URL)
             .addConverterFactory(GsonConverterFactory.create())

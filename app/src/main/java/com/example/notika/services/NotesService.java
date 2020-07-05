@@ -33,4 +33,7 @@ public interface NotesService {
     @GET("notes")
     Call<ArrayList<Notes>> getNotes(@Header("Authorization") String authorization);
 
+    @POST("notes/{noteId}/favorite")
+    Call<Void> favoriteNotes(@Path("noteId") String noteId, @Header("Authorization") String authorization);
+
 }
