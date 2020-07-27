@@ -10,6 +10,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -35,5 +36,18 @@ public interface NotesService {
 
     @POST("notes/{noteId}/favorite")
     Call<Void> favoriteNotes(@Path("noteId") String noteId, @Header("Authorization") String authorization);
+
+    @DELETE("notes/{noteId}")
+    Call<Void> deleteNotes(@Path("noteId") String noteId, @Header("Authorization") String authorization);
+
+    @FormUrlEncoded
+    @POST("note")
+    Call<Notes> addNote(@Header("Authorization") String authorization, @Field("title") String title, @Field("body") String body, @Field("category") String category);
+
+    @POST("verify")
+    Call<Void> verifyToken(@Header("Authorization") String authorization);
+
+
+
 
 }

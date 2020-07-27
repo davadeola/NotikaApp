@@ -1,6 +1,7 @@
 package com.example.notika.services;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.notika.R;
 import com.example.notika.services.models.Notes;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,7 +34,7 @@ import retrofit2.Response;
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
     private ArrayList<Notes> notesList;
     private Context context;
-
+    public static final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     public NotesAdapter(ArrayList<Notes> notesList, Context context){
         this.notesList = notesList;
@@ -52,21 +60,20 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         holder.favoriteToggle.setOnClickListener(v -> {
             NotesService notesService = ServiceBuilder.buildService(NotesService.class);
             Call<Void> favoriteCall = notesService.favoriteNotes(currentNote.getNoteId(), String.format("Bearer %s", token));
+            holder.isFavorite = !holder.isFavorite;
 
+            holder.favoriteToggle.setImageResource(
+                    holder.isFavorite ? R.drawable.ic_baseline_star_24 : R.drawable.ic_baseline_star_border_24);
 
 
             favoriteCall.enqueue(new Callback<Void>() {
 
                 @Override
                 public void onResponse(Call<Void> call, Response<Void> response) {
-                    if (response.isSuccessful()){
-
-                        holder.isFavorite = !holder.isFavorite;
-
-                        holder.favoriteToggle.setImageResource(
-                                holder.isFavorite ? R.drawable.ic_baseline_star_24 : R.drawable.ic_baseline_star_border_24);
-
-
+                    if (response.code() == 401){
+                        Toast.makeText(context, "Please login and try again", Toast.LENGTH_SHORT).show();
+                    }else if(response.code() == 500){
+                        Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -87,7 +94,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView noteTitle;
+        private TextView noteTitle,date;
         private View noteBanner;
         private ImageView favoriteToggle;
         private boolean isFavorite;
@@ -100,7 +107,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             noteTitle = itemView.findViewById(R.id.note_title);
             noteBanner = itemView.findViewById(R.id.category_banner);
             favoriteToggle = itemView.findViewById(R.id.favorite_toggle_icon);
-
+            date = itemView.findViewById(R.id.date);
         }
 
 
@@ -110,6 +117,16 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         public void bind(Notes currentNote) {
             noteTitle.setText(currentNote.getTitle());
             isFavorite = currentNote.isFavorite();
+
+            //format the date string
+
+            PrettyTime prettyTime = new PrettyTime(Locale.getDefault());
+
+            try {
+                date.setText(prettyTime.format(inputFormat.parse(currentNote.getLastEdited())));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             noteId = currentNote.getNoteId();
             int colorCode;

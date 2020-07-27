@@ -27,6 +27,7 @@ public class TokenRenewInterceptor implements Authenticator {
     private final static String myPreference = "myPref";
     private static String savedToken = "";
 
+
     public static void  saveToken(String token, Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(myPreference, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -42,9 +43,6 @@ public class TokenRenewInterceptor implements Authenticator {
 
         return gottenToken;
     }
-
-
-
 
     private void setAuthHeader(Request.Builder builder, String token) {
         if (token != null) //Add Auth token to each request if authorized

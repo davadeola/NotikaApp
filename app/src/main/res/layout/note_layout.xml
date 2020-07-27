@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
@@ -8,39 +9,60 @@
     android:layout_marginRight="8dp"
     >
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="32dp"
-        >
+        android:layout_margin="32dp">
 
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Untitled"
-            android:layout_weight="4"
             android:id="@+id/note_title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+            android:layout_width="160dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:text="Untitled"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            app:layout_constraintEnd_toStartOf="@+id/favorite_toggle_icon"
+            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/favorite_toggle_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/date"
+            app:layout_constraintEnd_toStartOf="@+id/category_banner"
+            app:layout_constraintStart_toEndOf="@+id/note_title"
+            app:layout_constraintTop_toTopOf="@+id/note_title"
             app:srcCompat="@drawable/ic_baseline_star_border_24" />
 
         <View
-            android:layout_width="8dp"
-            android:layout_height="match_parent"
             android:id="@+id/category_banner"
-            android:background="@color/colorPrimary"/>
+            android:layout_width="8dp"
+            android:layout_height="0dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/favorite_toggle_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/note_title"
+            app:layout_constraintStart_toStartOf="@+id/note_title"
+            app:layout_constraintTop_toBottomOf="@+id/note_title" />
 
 
-
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.cardview.widget.CardView>

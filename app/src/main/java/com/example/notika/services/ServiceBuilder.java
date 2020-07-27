@@ -27,14 +27,6 @@ public class ServiceBuilder {
 
     //create OKHttp client and merge the logger
     private static OkHttpClient.Builder okHttp = new OkHttpClient.Builder()
-            .authenticator(new Authenticator() {
-                @Nullable
-                @Override
-                public Request authenticate(@Nullable Route route, @NotNull Response response) throws IOException {
-                    
-                    return null;
-                }
-            })
             .addInterceptor(logger);
 
 

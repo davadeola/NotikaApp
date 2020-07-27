@@ -22,6 +22,7 @@ import com.example.notika.services.models.Notes;
 import com.example.notika.services.models.Token;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,7 +102,9 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<Token> call, Throwable t) {
                         Log.e("Bad", t.getMessage());
-                        Toast.makeText(getApplicationContext(), "Failed to login", Toast.LENGTH_SHORT).show();
+                        if(t instanceof IOException) {
+                            Toast.makeText(getApplicationContext(), "Internet connection lost", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
             }
@@ -112,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
     public void launchSignUp(View view) {
         Intent i  = new Intent(LoginActivity.this, SignUpActivity.class);
         startActivity(i);
+        finish();
     }
 
     public void getNotes(String token){
@@ -128,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.putParcelableArrayListExtra("notes", notes);
                     startActivity(intent);
-
+                    finish();
                 }
             }
 

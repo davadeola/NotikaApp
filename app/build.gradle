@@ -44,5 +44,8 @@ dependencies {
     //for logging
     implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
 
+    //for formatting time
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
+
 
 }
