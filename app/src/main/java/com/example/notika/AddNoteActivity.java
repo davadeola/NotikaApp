@@ -84,7 +84,7 @@ public class AddNoteActivity extends AppCompatActivity {
                   if (response.isSuccessful()){
                       startActivity(new Intent(AddNoteActivity.this, MainActivity.class));
                      Toast.makeText(getApplicationContext(), "Your note has been added", Toast.LENGTH_SHORT).show();
-                     // Log.d("ADDED NOTE", response.body().toString());
+                    
                   }
                }
 

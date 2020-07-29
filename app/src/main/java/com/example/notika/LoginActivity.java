@@ -83,6 +83,8 @@ public class LoginActivity extends AppCompatActivity {
 
                             getNotes(token);
 
+                            Log.d("USERINFO", "LOGIN: "+response.body().getEmail());
+
 
                         }else if(response.code() == 400) {
                             mErrorMessage.setText(R.string.wrong_credentials);
