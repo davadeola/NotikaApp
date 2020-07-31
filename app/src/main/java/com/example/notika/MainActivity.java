@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.notika.services.NotesAdapter;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
     private NotesAdapter notesAdapter;
+    private Button msetting;
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -57,6 +59,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         toolbar = findViewById(R.id.toolbar);
         fab = findViewById(R.id.fab_main);
+        msetting=findViewById(R.id.setting);
+
+        msetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this,SettingsActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
 
         setSupportActionBar(toolbar);
