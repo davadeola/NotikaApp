@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
     private NotesAdapter notesAdapter;
-    private Button msetting;
+
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -59,17 +59,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         toolbar = findViewById(R.id.toolbar);
         fab = findViewById(R.id.fab_main);
-        msetting=findViewById(R.id.setting);
-
-        msetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,SettingsActivity.class);
-                startActivity(intent);
-
-            }
-        });
-
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -190,6 +179,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.nav_settings:
+                Intent intent=new Intent(MainActivity.this,SettingsActivity.class);
+                startActivity(intent);
+                break;
+        }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
