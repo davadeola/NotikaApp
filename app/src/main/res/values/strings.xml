@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Notika</string>
     <string name="sign_up_today">Sign up Today</string>
-    <string name="user_name">User name</string>
+
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
@@ -15,6 +15,13 @@
     <string name="title">Title</string>
     <string name="enter_your_new_note_here">Enter your new note here</string>
     <string name="add_note_title">Add new note</string>
+    <string name="user_name">User name</string>
+    <string name="username">UserName</string>
+    <string name="summary">Summary</string>
+    <string name="total_notes">Total Notes</string>
+    <string name="favourite_notes">Favourite Notes</string>
+    <string name="popular_catgory">Popular Catgory</string>
+    <string name="_0">0</string>
 
     <string-array name="categories">
         <item name="cat_none">No category</item>

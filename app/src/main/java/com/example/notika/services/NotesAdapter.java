@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.notika.ProfileActivity;
 import com.example.notika.R;
 import com.example.notika.services.models.Notes;
 
@@ -35,6 +36,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     private ArrayList<Notes> notesList;
     private Context context;
     public static final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+    public NotesAdapter(){
+
+    }
 
     public NotesAdapter(ArrayList<Notes> notesList, Context context){
         this.notesList = notesList;
@@ -92,6 +97,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     public int getItemCount() {
         return notesList.size();
     }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView noteTitle,date;

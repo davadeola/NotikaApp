@@ -25,6 +25,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
+repositories {
+    mavenCentral()
+}
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -47,5 +50,7 @@ dependencies {
     //for formatting time
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
 
+    implementation 'com.mikhaellopez:circularimageview:4.2.0'
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 
 }

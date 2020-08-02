@@ -7,12 +7,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.notika.services.NotesAdapter;
@@ -24,7 +23,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private NotesAdapter notesAdapter;
 
+    private Button button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         fab = findViewById(R.id.fab_main);
-
+        button = findViewById(R.id.button_profile);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -64,9 +64,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intentAdd);
             }
         });
+        //button for switching to profile activity
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(this, count(), Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(MainActivity.this, ProfileActivity.class);
+                myIntent.putExtra("EXTRA_ORDER_KEY", notes);
+                startActivity(myIntent);
+            }
+        });
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+
 
 
     }
@@ -160,4 +171,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    public MainActivity(){
+
+    }
+
+    public int count(){
+        if (notesAdapter!= null) {
+            return notesAdapter.getItemCount();
+        } else
+            return 0;
+    }
+
 }
