@@ -47,6 +47,9 @@ public class AddNoteActivity extends AppCompatActivity {
 
 
 
+
+
+
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle(R.string.add_note_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

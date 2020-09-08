@@ -41,7 +41,7 @@ import retrofit2.Response;
 
 public class UploadImageActivity extends AppCompatActivity {
     public ImageView imgUpload;
-    public Button btnUpload;
+    public Button btnUpload,btnSkip;
     //Image request code
     private int PICK_IMAGE_REQUEST = 1;
     //storage permission code
@@ -59,6 +59,7 @@ public class UploadImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upload_image);
         imgUpload = findViewById(R.id.img_uploadProfile);
         btnUpload = findViewById(R.id.btn_upload);
+        btnSkip=findViewById(R.id.btn_skip);
         //Requesting storage permission
         requestStoragePermission();
         imgUpload.setOnClickListener(new View.OnClickListener() {
@@ -67,12 +68,20 @@ public class UploadImageActivity extends AppCompatActivity {
                 showFileChooser();
             }
         });
+        btnSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(UploadImageActivity.this,MainActivity.class);
+                startActivity(intent);
+            }
+        });
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 uploadMultipart();
-                Intent intent=new Intent(UploadImageActivity.this,MainActivity.class);
-                startActivity(intent);
+                Toast.makeText(UploadImageActivity.this, "done1", Toast.LENGTH_SHORT).show();
+               // Intent intent=new Intent(UploadImageActivity.this,MainActivity.class);
+              //  startActivity(intent);
 
             }
         });
@@ -85,20 +94,21 @@ public class UploadImageActivity extends AppCompatActivity {
      * We need the full image path and the name for the image in this method
      * */
     public void uploadMultipart() {
-        //getting name for the image
-       // String name = editText.getText().toString().trim();
-        String token = TokenRenewInterceptor.getToken(getApplicationContext());
 
-        //getting the actual path of the image
-        String path = getPath(filePath);
+    //Uploading code
 
-        //Uploading code
         try {
+            String token = TokenRenewInterceptor.getToken(getApplicationContext());
+
+            //getting the actual path of the image
+            String path = getPath(filePath);
+            Toast.makeText(this, filePath.toString(), Toast.LENGTH_SHORT).show();
             //Upload service
             NotesService notesService = ServiceBuilder.buildService(NotesService.class);
 
             //Creating a multi part request
             File file = new File(path);
+
             RequestBody requestFile =
                     RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
@@ -112,23 +122,19 @@ public class UploadImageActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<ResponseBody> call,
                                        Response<ResponseBody> response) {
+
                     Log.v("Upload", "success");
+                    Toast.makeText(UploadImageActivity.this, "done2", Toast.LENGTH_SHORT).show();
+
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     Log.e("Upload error:", t.getMessage());
+                    Toast.makeText(UploadImageActivity.this, "some error", Toast.LENGTH_SHORT).show();
                 }
             });
 
-
-//            new MultipartUploadRequest(this, uploadId, SyncStateContract.Constants.UPLOAD_URL)
-//                    .addFileToUpload(path, "image") //Adding file
-//                    .setNotificationConfig(new UploadNotificationConfig())
-//                    .setMaxRetries(2)
-//                    .startUpload();
-
-            //Starting the upload
 
         } catch (Exception exc) {
             Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
