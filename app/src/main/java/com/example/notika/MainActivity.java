@@ -13,11 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.notika.services.NotesAdapter;
@@ -40,6 +42,7 @@ import com.google.android.material.navigation.NavigationView;
 
 
 
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
     private ArrayList<Notes> notes;
@@ -48,8 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NotesAdapter notesAdapter;
 
 
-
-
+    private ImageView prof_image;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
@@ -61,6 +63,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+
+        prof_image = findViewById(R.id.image);
+
+
+
+        //display the image
+        String imageUrl = TokenRenewInterceptor.getImageUrl(getApplicationContext());
+
+        //load into the imageView
+//        Picasso.get().load(imageUrl).into(prof_image);
+
 
         toolbar = findViewById(R.id.toolbar);
         fab = findViewById(R.id.fab_main);

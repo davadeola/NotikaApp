@@ -22,7 +22,7 @@
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:text="Untitled"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintEnd_toStartOf="@+id/favorite_toggle_icon"
             app:layout_constraintHorizontal_bias="0.51"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
