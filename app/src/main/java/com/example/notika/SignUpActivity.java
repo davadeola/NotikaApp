@@ -9,9 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.notika.services.NotesService;
 import com.example.notika.services.ServiceBuilder;
+import com.example.notika.services.TokenRenewInterceptor;
 import com.example.notika.services.models.Token;
 import com.example.notika.services.models.User;
 
@@ -26,6 +29,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText mEmail;
     private EditText mPassword; private EditText mConfirmPassword;
     private Button signUpButton;
+    private TextView mErrorMessage;
 
 
     @Override
@@ -44,6 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.password_signup_editText);
         mConfirmPassword = findViewById(R.id.conpassword_signup_editText);
         signUpButton = findViewById(R.id.button_signup);
+        mErrorMessage = findViewById(R.id.error_message_signup);
 
 
 
@@ -61,18 +66,31 @@ public class SignUpActivity extends AppCompatActivity {
                 call.enqueue(new Callback<Token>() {
                     @Override
                     public void onResponse(Call<Token> call, Response<Token> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
+
 
                             Intent i  = new Intent(SignUpActivity.this, UploadImageActivity.class);
-                            startActivity(i);
-                                Log.d("Token", response.body().getToken());
 
+
+                            startActivity(i);
+                            Log.d("Token", response.body().getToken());
+                            if (response.code() == 400) {
+                                mErrorMessage.setText(R.string.wrong_credentials);
+                                mPassword.setText("");
+                            } else if (response.code() == 401) {
+                                mErrorMessage.setText(R.string.already_in_use);
+                                mPassword.setText("");
+                            } else {
+                                mErrorMessage.setText(R.string.something_went_wrong);
+                                mPassword.setText("");
+                            }
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Token> call, Throwable t) {
                         Log.d("SignError" , t.getMessage());
+
                     }
                 });
 
