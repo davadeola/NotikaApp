@@ -25,6 +25,7 @@ import com.example.notika.services.NotesService;
 import com.example.notika.services.ServiceBuilder;
 import com.example.notika.services.TokenRenewInterceptor;
 import com.example.notika.services.models.Notes;
+import com.example.notika.services.models.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
@@ -37,12 +38,16 @@ import retrofit2.Response;
 
 import com.google.android.material.navigation.NavigationView;
 
+
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
     private ArrayList<Notes> notes;
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
     private NotesAdapter notesAdapter;
+
+
 
 
     private DrawerLayout drawerLayout;
@@ -188,4 +193,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
