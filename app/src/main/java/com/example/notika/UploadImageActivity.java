@@ -14,16 +14,30 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.SyncStateContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.notika.services.NotesService;
+import com.example.notika.services.ServiceBuilder;
+import com.example.notika.services.TokenRenewInterceptor;
+
 import net.gotev.uploadservice.data.UploadNotificationConfig;
 import net.gotev.uploadservice.protocols.multipart.MultipartUploadRequest;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class UploadImageActivity extends AppCompatActivity {
     public ImageView imgUpload;
@@ -56,9 +70,10 @@ public class UploadImageActivity extends AppCompatActivity {
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                uploadMultipart();
                 Intent intent=new Intent(UploadImageActivity.this,MainActivity.class);
                 startActivity(intent);
-               // uploadMultipart();
+
             }
         });
     }
@@ -72,15 +87,39 @@ public class UploadImageActivity extends AppCompatActivity {
     public void uploadMultipart() {
         //getting name for the image
        // String name = editText.getText().toString().trim();
+        String token = TokenRenewInterceptor.getToken(getApplicationContext());
 
         //getting the actual path of the image
         String path = getPath(filePath);
 
         //Uploading code
         try {
-            String uploadId = UUID.randomUUID().toString();
+            //Upload service
+            NotesService notesService = ServiceBuilder.buildService(NotesService.class);
 
             //Creating a multi part request
+            File file = new File(path);
+            RequestBody requestFile =
+                    RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+// MultipartBody.Part is used to send also the actual file name
+            MultipartBody.Part body =
+                    MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+
+
+            Call<ResponseBody> call = notesService.upload(String.format("Bearer %s", token),body);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call,
+                                       Response<ResponseBody> response) {
+                    Log.v("Upload", "success");
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e("Upload error:", t.getMessage());
+                }
+            });
 
 
 //            new MultipartUploadRequest(this, uploadId, SyncStateContract.Constants.UPLOAD_URL)
