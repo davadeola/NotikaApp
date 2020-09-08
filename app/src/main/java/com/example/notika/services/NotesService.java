@@ -41,6 +41,10 @@ public interface NotesService {
     Call<Void> deleteNotes(@Path("noteId") String noteId, @Header("Authorization") String authorization);
 
     @FormUrlEncoded
+    @POST("notes/{noteId}")
+    Call<Void> editNotes(@Path("noteId") String noteId, @Header("Authorization") String authorization, @Field("title") String title, @Field("body") String body, @Field("category") String category);
+
+    @FormUrlEncoded
     @POST("note")
     Call<Notes> addNote(@Header("Authorization") String authorization, @Field("title") String title, @Field("body") String body, @Field("category") String category);
 
