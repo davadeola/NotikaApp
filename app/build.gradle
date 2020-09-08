@@ -48,5 +48,8 @@ dependencies {
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
     implementation 'com.mikhaellopez:circularimageview:4.2.0'
 
+    //For image
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 
 }

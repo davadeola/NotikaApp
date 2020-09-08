@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddNoteActivity" />
+        <activity android:name=".AddNoteActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity" />

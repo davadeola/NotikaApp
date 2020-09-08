@@ -42,6 +42,7 @@
             android:layout_alignEnd="@id/recyclerView"
             android:layout_alignBottom="@id/recyclerView"
             android:layout_marginLeft="32dp"
+            android:windowSoftInputMode="adjustResize"
             android:layout_marginTop="32dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="32dp"
