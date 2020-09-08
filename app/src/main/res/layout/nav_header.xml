@@ -6,22 +6,20 @@
     android:background="@color/colorAccent">
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/image"
+        android:id="@+id/profile_image"
         android:layout_marginTop="50dp"
         android:layout_width="200dp"
         android:layout_height="200dp"
         app:civ_border_width="2dp"
         app:civ_shadow_radius="10dp"
         android:layout_centerHorizontal="true"/>
-
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="270dp"
         android:layout_marginBottom="0dp"
-        android:text="@string/nikita"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#000000"
         android:textSize="35sp"
