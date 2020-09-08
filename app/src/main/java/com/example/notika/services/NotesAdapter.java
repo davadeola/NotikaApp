@@ -120,7 +120,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
 
 
-
         public void bind(Notes currentNote) {
             noteTitle.setText(currentNote.getTitle());
             isFavorite = currentNote.isFavorite();
@@ -160,6 +159,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             favoriteToggle.setImageResource(
                     isFavorite ? R.drawable.ic_baseline_star_24 : R.drawable.ic_baseline_star_border_24);
         }
+
 
 
     }

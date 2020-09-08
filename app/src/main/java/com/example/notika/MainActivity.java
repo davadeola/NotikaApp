@@ -3,6 +3,7 @@ package com.example.notika;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -71,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(this, count(), Toast.LENGTH_SHORT).show();
                 Intent myIntent = new Intent(MainActivity.this, ProfileActivity.class);
                 myIntent.putExtra("EXTRA_ORDER_KEY", notes);
+                //myIntent.putExtra()
+                //myIntent.putExtra("EXTRA_ORDER_KEY_II", recyclerView);
                 startActivity(myIntent);
             }
         });
@@ -175,11 +178,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public int count(){
-        if (notesAdapter!= null) {
-            return notesAdapter.getItemCount();
-        } else
-            return 0;
-    }
 
 }
