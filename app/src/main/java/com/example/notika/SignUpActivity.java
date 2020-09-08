@@ -68,7 +68,10 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onResponse(Call<Token> call, Response<Token> response) {
                         if (response.isSuccessful()) {
 
-                            Intent i = new Intent(SignUpActivity.this, MainActivity.class);
+
+                            Intent i  = new Intent(SignUpActivity.this, UploadImageActivity.class);
+
+
                             startActivity(i);
                             Log.d("Token", response.body().getToken());
                             if (response.code() == 400) {
