@@ -20,25 +20,34 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.notika.services.NotesAdapter;
 import com.example.notika.services.NotesService;
 import com.example.notika.services.ServiceBuilder;
 import com.example.notika.services.TokenRenewInterceptor;
 import com.example.notika.services.models.Notes;
+import com.example.notika.services.models.User;
+import com.squareup.picasso.Picasso;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.google.android.material.navigation.NavigationView;
-import com.squareup.picasso.Picasso;
+
+
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
@@ -47,8 +56,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FloatingActionButton fab;
     private NotesAdapter notesAdapter;
 
+
     private ImageView prof_image;
     private DrawerLayout drawerLayout;
+    private TextView userNameView;
     private NavigationView navigationView;
 
     @Override
@@ -59,16 +70,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+        View headerView=navigationView.getHeaderView(0);
+        prof_image= headerView.findViewById(R.id.profile_image);
+        userNameView =headerView.findViewById(R.id.name);
 
-        prof_image = findViewById(R.id.image);
-
-
-
-        //display the image
+        //display the image and User Name
         String imageUrl = TokenRenewInterceptor.getImageUrl(getApplicationContext());
+        String userName = TokenRenewInterceptor.getUserName(getApplicationContext());
+        userNameView.setText(userName);
 
-        //load into the imageView
-//        Picasso.get().load(imageUrl).into(prof_image);
+
+        //display image
+        RequestOptions options = new RequestOptions()
+                .centerCrop();
+
+        Glide.with(this)
+                .load(imageUrl)
+                .apply(options)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(prof_image);
+
+
 
 
         toolbar = findViewById(R.id.toolbar);
@@ -202,4 +224,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

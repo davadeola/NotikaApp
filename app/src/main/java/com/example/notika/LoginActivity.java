@@ -87,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             //saves the imageUrl to shared preferences
                             TokenRenewInterceptor.saveImageUrl(response.body().getImageUrl(), getApplicationContext());
+                            TokenRenewInterceptor.saveUserName(response.body().getUsername(), getApplicationContext());
 
 
                         }else if(response.code() == 400) {

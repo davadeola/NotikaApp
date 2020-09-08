@@ -34,6 +34,7 @@ public class TokenRenewInterceptor implements Authenticator {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("token", token);
 
+
         editor.apply();
     }
 
@@ -41,6 +42,13 @@ public class TokenRenewInterceptor implements Authenticator {
         SharedPreferences sharedPreferences = context.getSharedPreferences(myPreference, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("imageUrl", imageUrl);
+        editor.apply();
+    }
+
+    public static void saveUserName(String userName, Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(myPreference, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("userName", userName);
         editor.apply();
     }
 
@@ -59,6 +67,13 @@ public class TokenRenewInterceptor implements Authenticator {
         String gottenImageUrl = sharedPreferences.getString("imageUrl", "");
 
         return gottenImageUrl;
+    }
+
+    public static String getUserName(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(myPreference, Context.MODE_PRIVATE);
+        String gottenUsername = sharedPreferences.getString("userName", "");
+
+        return gottenUsername;
     }
 
     private void setAuthHeader(Request.Builder builder, String token) {
