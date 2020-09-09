@@ -2,12 +2,14 @@ package com.example.notika;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NavUtils;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -29,12 +31,22 @@ public class ProfileActivity extends AppCompatActivity {
     private CircularImageView circularImageView;
     //private ArrayList<Notes> notes;
 
-
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_layout);
+
+        toolbar = findViewById(R.id.include);
+        setSupportActionBar(toolbar);
+
+
+
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle("Your Profile");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         ArrayList<Notes> note = (ArrayList<Notes>) getIntent().getSerializableExtra("EXTRA_ORDER_KEY");
 
         username = findViewById(R.id.username);
@@ -61,6 +73,17 @@ public class ProfileActivity extends AppCompatActivity {
 
         popularCategory = findViewById(R.id.no_popular_category);
         popularCategory.setText(popularCategory(note));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+               NavUtils.navigateUpFromSameTask(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
