@@ -28,6 +28,10 @@
     <string name="check_input">Please, check your input</string>
     <string name="wrong">Something went wrong</string>
     <string name="image_to_text">Image to Text</string>
+    <string name="summary">summary</string>
+    <string name="total_notes">Total Notes</string>
+    <string name="favourite_notes">Favourite Notes</string>
+    <string name="popular_catgory">Popular Category</string>
 
     <string-array name="categories">
         <item name="cat_none">No category</item>

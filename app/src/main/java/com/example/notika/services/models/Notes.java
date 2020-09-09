@@ -90,4 +90,6 @@ public class Notes implements Parcelable {
     public boolean isFavorite() {
         return favorite;
     }
+
+
 }
