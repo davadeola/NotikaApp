@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         List<Notes> notesList = new ArrayList<>();
 
         for ( Notes note : notes){
-           if (note.getTitle().contains(userInput)  || note.getBody().contains(userInput)){
+           if (note.getTitle().toLowerCase().contains(userInput)  || note.getBody().toLowerCase().contains(userInput)){
                 notesList.add(note);
            }
         }

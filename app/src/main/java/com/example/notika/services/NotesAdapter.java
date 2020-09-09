@@ -36,7 +36,8 @@ import retrofit2.Response;
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
     private ArrayList<Notes> notesList;
     private Context context;
-    public static final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    public static final SimpleDateFormat inputFormat = new SimpleDateFormat("MMMM dd yyyy, hh:mm:ss a");
+
 
     public NotesAdapter(ArrayList<Notes> notesList, Context context){
         this.notesList = notesList;
@@ -130,10 +131,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
             //format the date string
 
-            PrettyTime prettyTime = new PrettyTime(Locale.getDefault());
+            PrettyTime prettyTime = new PrettyTime();
 
             try {
+
                 date.setText(prettyTime.format(inputFormat.parse(currentNote.getLastEdited())));
+                Log.d("DateFormat", inputFormat.parse(currentNote.getLastEdited()).toString());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
