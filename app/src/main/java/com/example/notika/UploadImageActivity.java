@@ -53,6 +53,8 @@ public class UploadImageActivity extends AppCompatActivity {
     public Button btnUpload;
     private String TAG = "IN UPLOAD";
 
+
+    //Image request code
     private int PICK_IMAGE_REQUEST = 1;
 
     private static final int STORAGE_PERMISSION_CODE = 123;
