@@ -1,6 +1,7 @@
 package com.example.notika.services;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,8 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.notika.ProfileActivity;
 import com.example.notika.R;
+import com.example.notika.ViewNote;
 import com.example.notika.services.models.Notes;
 
 import org.ocpsoft.prettytime.PrettyTime;
@@ -36,10 +37,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     private ArrayList<Notes> notesList;
     private Context context;
     public static final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-
-    public NotesAdapter(){
-
-    }
 
     public NotesAdapter(ArrayList<Notes> notesList, Context context){
         this.notesList = notesList;
@@ -99,8 +96,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
 
 
+    public  void updateList(List<Notes> newList){
+        notesList = new ArrayList<>();
+        notesList.addAll(newList);
+        notifyDataSetChanged();
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView noteTitle,date;
         private View noteBanner;
         private ImageView favoriteToggle;
@@ -110,12 +113,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            itemView.setOnClickListener(this);
             noteTitle = itemView.findViewById(R.id.note_title);
             noteBanner = itemView.findViewById(R.id.category_banner);
             favoriteToggle = itemView.findViewById(R.id.favorite_toggle_icon);
             date = itemView.findViewById(R.id.date);
         }
+
 
 
 
@@ -161,6 +165,15 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         }
 
 
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            Notes currNote = notesList.get(position);
+            Log.d("CLICKING", "clicked"+position);
+            Intent intent = new Intent(context, ViewNote.class);
+            intent.putExtra("Note", currNote);
 
+            v.getContext().startActivity(intent);
+        }
     }
 }

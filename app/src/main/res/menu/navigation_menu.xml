@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_allNotes"
+            android:title="@string/all_notes"
+            android:icon="@drawable/ic_baseline_notes_24"
+            />
+        <item android:id="@+id/nav_profile"
+            android:title="@string/profile"
+            android:icon="@drawable/ic_baseline_account_circle_24"/>
+
+        <item android:id="@+id/nav_favorites"
+            android:title="@string/favorites"
+            android:icon="@drawable/ic_baseline_star_24"
+            app:showAsAction="never"
+            />
+        <item android:id="@+id/nav_scan"
+            android:title="@string/image_to_text"
+            android:icon="@drawable/ic_baseline_filter_center_focus_24"
+            app:showAsAction="never"
+            />
+        <item android:id="@+id/nav_settings"
+            android:title="@string/settings"
+            android:icon="@drawable/ic_baseline_settings_24"
+            app:showAsAction="never"/>
+    </group>
+</menu>

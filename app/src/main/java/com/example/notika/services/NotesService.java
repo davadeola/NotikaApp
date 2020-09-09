@@ -1,5 +1,6 @@
 package com.example.notika.services;
 
+import com.example.notika.services.models.ApiResponse;
 import com.example.notika.services.models.Notes;
 import com.example.notika.services.models.Token;
 import com.example.notika.services.models.User;
@@ -7,6 +8,8 @@ import com.example.notika.services.models.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,7 +18,9 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface NotesService {
@@ -29,7 +34,7 @@ public interface NotesService {
 
 
     @POST("signup")
-    Call<Token> signup(@Body User newUser);
+    Call<ApiResponse> signup(@Body User newUser);
 
     @GET("notes")
     Call<ArrayList<Notes>> getNotes(@Header("Authorization") String authorization);
@@ -41,11 +46,28 @@ public interface NotesService {
     Call<Void> deleteNotes(@Path("noteId") String noteId, @Header("Authorization") String authorization);
 
     @FormUrlEncoded
+    @POST("notes/{noteId}")
+    Call<Void> editNotes(@Path("noteId") String noteId, @Header("Authorization") String authorization, @Field("title") String title, @Field("body") String body, @Field("category") String category);
+
+    @FormUrlEncoded
     @POST("note")
     Call<Notes> addNote(@Header("Authorization") String authorization, @Field("title") String title, @Field("body") String body, @Field("category") String category);
 
     @POST("verify")
     Call<Void> verifyToken(@Header("Authorization") String authorization);
+
+    @POST("logout")
+    Call<Void> delete(@Header("Authorization") String authorization);
+
+
+    @Multipart
+    @POST("uploadProfile")
+    Call<ApiResponse> upload(
+            @Header("Authorization") String authorization,
+            @Part MultipartBody.Part image
+    );
+
+
 
 
 

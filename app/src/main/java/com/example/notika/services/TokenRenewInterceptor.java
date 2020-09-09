@@ -28,20 +28,61 @@ public class TokenRenewInterceptor implements Authenticator {
     private static String savedToken = "";
 
 
+    //saves the token in the shared preference
     public static void  saveToken(String token, Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(myPreference, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("token", token);
 
+
+        editor.apply();
+    }
+
+    public static void  resetAllPreferences(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(myPreference, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("token", "");
+        editor.putString("imageUrl", "");
+        editor.putString("userName", "");
+        editor.apply();
+    }
+
+    public static  void saveImageUrl(String imageUrl, Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(myPreference, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("imageUrl", imageUrl);
+        editor.apply();
+    }
+
+    public static void saveUserName(String userName, Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(myPreference, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("userName", userName);
         editor.apply();
     }
 
 
+    //enables user to get token in any activity
     public static String getToken(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(myPreference, Context.MODE_PRIVATE);
         String gottenToken = sharedPreferences.getString("token", "");
 
         return gottenToken;
+    }
+
+
+    public static String getImageUrl(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(myPreference, Context.MODE_PRIVATE);
+        String gottenImageUrl = sharedPreferences.getString("imageUrl", "");
+
+        return gottenImageUrl;
+    }
+
+    public static String getUserName(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(myPreference, Context.MODE_PRIVATE);
+        String gottenUsername = sharedPreferences.getString("userName", "");
+
+        return gottenUsername;
     }
 
     private void setAuthHeader(Request.Builder builder, String token) {
