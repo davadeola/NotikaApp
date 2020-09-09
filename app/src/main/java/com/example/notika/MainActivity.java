@@ -222,6 +222,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent=new Intent(MainActivity.this,SettingsActivity.class);
                 startActivity(intent);
                 break;
+
+            case R.id.nav_profile:
+                Intent myIntent = new Intent(MainActivity.this, ProfileActivity.class);
+                myIntent.putExtra("EXTRA_ORDER_KEY", notes);
+                startActivity(myIntent);
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

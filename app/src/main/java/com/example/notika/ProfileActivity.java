@@ -10,8 +10,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.notika.services.NotesAdapter;
+import com.example.notika.services.TokenRenewInterceptor;
 import com.example.notika.services.models.Notes;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
 
@@ -20,6 +25,8 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView total_notes;
     private TextView favourites_total;
     private TextView popularCategory;
+    private TextView username;
+    private CircularImageView circularImageView;
     //private ArrayList<Notes> notes;
 
 
@@ -29,6 +36,23 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_layout);
         ArrayList<Notes> note = (ArrayList<Notes>) getIntent().getSerializableExtra("EXTRA_ORDER_KEY");
+
+        username = findViewById(R.id.username);
+        circularImageView = findViewById(R.id.image);
+
+        String imageUrl = TokenRenewInterceptor.getImageUrl(getApplicationContext());
+        String userName = TokenRenewInterceptor.getUserName(getApplicationContext());
+        username.setText(userName);
+
+        RequestOptions options = new RequestOptions()
+                .centerCrop();
+
+        Glide.with(this)
+                .load(imageUrl)
+                .apply(options)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(circularImageView);
+
         total_notes = findViewById(R.id.no_notes);
         total_notes.setText(String.valueOf(totalNotes(note)));
 
