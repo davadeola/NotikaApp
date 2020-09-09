@@ -7,7 +7,7 @@
         <item android:id="@+id/nav_profile"
             android:title="@string/profile"/>
         <item android:id="@+id/nav_favorites"
-            android:title="@string/favorites"/>
+            android:title="Image Retrieve"/>
         <item android:id="@+id/nav_settings"
             android:title="@string/settings"/>
     </group>
