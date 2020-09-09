@@ -95,6 +95,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         return notesList.size();
     }
 
+
+    public  void updateList(List<Notes> newList){
+        notesList = new ArrayList<>();
+        notesList.addAll(newList);
+        notifyDataSetChanged();
+
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView noteTitle,date;
         private View noteBanner;

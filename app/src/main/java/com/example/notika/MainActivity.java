@@ -16,10 +16,12 @@ import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +51,7 @@ import com.google.android.material.navigation.NavigationView;
 
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener , SearchView.OnQueryTextListener  {
     private Toolbar toolbar;
     private ArrayList<Notes> notes;
     private RecyclerView recyclerView;
@@ -225,4 +227,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+
+        searchView.setOnQueryTextListener(this);
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+                return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+
+        String userInput= newText.toLowerCase();
+        List<Notes> notesList = new ArrayList<>();
+
+        for ( Notes note : notes){
+           if (note.getTitle().contains(userInput)  || note.getBody().contains(userInput)){
+                notesList.add(note);
+           }
+        }
+
+        notesAdapter.updateList(notesList);
+
+        return true;
+    }
 }
