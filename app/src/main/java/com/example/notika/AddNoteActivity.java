@@ -113,7 +113,7 @@ public class AddNoteActivity extends AppCompatActivity {
                             startActivity(backToViewIntent);
 
                             Toast.makeText(getApplicationContext(), "Your note has been edited", Toast.LENGTH_SHORT).show();
-
+                            finish();
                         }
                     }
 
