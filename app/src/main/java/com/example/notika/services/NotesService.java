@@ -1,5 +1,6 @@
 package com.example.notika.services;
 
+import com.example.notika.services.models.ApiResponse;
 import com.example.notika.services.models.Notes;
 import com.example.notika.services.models.Token;
 import com.example.notika.services.models.User;
@@ -33,7 +34,7 @@ public interface NotesService {
 
 
     @POST("signup")
-    Call<Token> signup(@Body User newUser);
+    Call<ApiResponse> signup(@Body User newUser);
 
     @GET("notes")
     Call<ArrayList<Notes>> getNotes(@Header("Authorization") String authorization);
@@ -55,12 +56,15 @@ public interface NotesService {
     @POST("verify")
     Call<Void> verifyToken(@Header("Authorization") String authorization);
 
+    @POST("logout")
+    Call<Void> delete(@Header("Authorization") String authorization);
+
 
     @Multipart
     @POST("uploadProfile")
-    Call<ResponseBody> upload(
+    Call<ApiResponse> upload(
             @Header("Authorization") String authorization,
-            @Part MultipartBody.Part file
+            @Part MultipartBody.Part image
     );
 
 

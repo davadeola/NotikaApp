@@ -38,6 +38,15 @@ public class TokenRenewInterceptor implements Authenticator {
         editor.apply();
     }
 
+    public static void  resetAllPreferences(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(myPreference, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("token", "");
+        editor.putString("imageUrl", "");
+        editor.putString("userName", "");
+        editor.apply();
+    }
+
     public static  void saveImageUrl(String imageUrl, Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(myPreference, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

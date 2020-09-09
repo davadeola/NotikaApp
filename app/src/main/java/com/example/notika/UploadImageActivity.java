@@ -1,6 +1,7 @@
 package com.example.notika;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -12,6 +13,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.SyncStateContract;
 import android.util.Log;
@@ -20,16 +22,23 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.notika.services.FileUtils;
 import com.example.notika.services.NotesService;
 import com.example.notika.services.ServiceBuilder;
 import com.example.notika.services.TokenRenewInterceptor;
+import com.example.notika.services.models.ApiResponse;
 
-import net.gotev.uploadservice.data.UploadNotificationConfig;
-import net.gotev.uploadservice.protocols.multipart.MultipartUploadRequest;
+//import net.gotev.uploadservice.data.UploadNotificationConfig;
+//import net.gotev.uploadservice.protocols.multipart.MultipartUploadRequest;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.logging.SimpleFormatter;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -42,16 +51,22 @@ import retrofit2.Response;
 public class UploadImageActivity extends AppCompatActivity {
     public ImageView imgUpload;
     public Button btnUpload;
-    //Image request code
+    private String TAG = "IN UPLOAD";
+
     private int PICK_IMAGE_REQUEST = 1;
-    //storage permission code
+
     private static final int STORAGE_PERMISSION_CODE = 123;
 
     //Bitmap to get image from gallery
     private Bitmap bitmap;
 
     //Uri to store the image uri
-    private Uri filePath;
+    private Uri filePath = null;
+
+    //file to be uploaded
+    private  File originalFile;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,154 +74,99 @@ public class UploadImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upload_image);
         imgUpload = findViewById(R.id.img_uploadProfile);
         btnUpload = findViewById(R.id.btn_upload);
-        //Requesting storage permission
-        requestStoragePermission();
+
+
         imgUpload.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                showFileChooser();
+            public void onClick(View v) {
+                chooseImage();
             }
         });
+
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadMultipart();
-                Intent intent=new Intent(UploadImageActivity.this,MainActivity.class);
-                startActivity(intent);
+                uploadMultipart(filePath);
+
 
             }
         });
     }
 
-
-
-    /*
-     * This is the method responsible for image upload
-     * We need the full image path and the name for the image in this method
-     * */
-    public void uploadMultipart() {
-        //getting name for the image
-       // String name = editText.getText().toString().trim();
-        String token = TokenRenewInterceptor.getToken(getApplicationContext());
-
-        //getting the actual path of the image
-        String path = getPath(filePath);
-
-        //Uploading code
-        try {
-            //Upload service
-            NotesService notesService = ServiceBuilder.buildService(NotesService.class);
-
-            //Creating a multi part request
-            File file = new File(path);
-            RequestBody requestFile =
-                    RequestBody.create(MediaType.parse("multipart/form-data"), file);
-
-// MultipartBody.Part is used to send also the actual file name
-            MultipartBody.Part body =
-                    MultipartBody.Part.createFormData("image", file.getName(), requestFile);
-
-
-            Call<ResponseBody> call = notesService.upload(String.format("Bearer %s", token),body);
-            call.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call,
-                                       Response<ResponseBody> response) {
-                    Log.v("Upload", "success");
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.e("Upload error:", t.getMessage());
-                }
-            });
-
-
-//            new MultipartUploadRequest(this, uploadId, SyncStateContract.Constants.UPLOAD_URL)
-//                    .addFileToUpload(path, "image") //Adding file
-//                    .setNotificationConfig(new UploadNotificationConfig())
-//                    .setMaxRetries(2)
-//                    .startUpload();
-
-            //Starting the upload
-
-        } catch (Exception exc) {
-            Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    //method to show file chooser
-    private void showFileChooser() {
+    private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+
+
     }
 
-    //handling the image chooser activity result
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode==PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null){
             filePath = data.getData();
+            String imageStringPath = FileUtils.getPath(getApplicationContext(), filePath);
+
+            if (filePath != null && imageStringPath!= null){
+                originalFile = new File(imageStringPath);
+            }
+
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 imgUpload.setImageBitmap(bitmap);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }
     }
 
-    //method to get the file path from uri
-    public String getPath(Uri uri) {
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        String document_id = cursor.getString(0);
-        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
-        cursor.close();
 
-        cursor = getContentResolver().query(
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
-        cursor.moveToFirst();
-        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-        cursor.close();
+    public void uploadMultipart(Uri fileUri) {
 
-        return path;
+
+        String token = TokenRenewInterceptor.getToken(getApplicationContext());
+
+
+
+       if (originalFile != null){
+           RequestBody filePart = RequestBody.create(MediaType.parse(Objects.requireNonNull(getContentResolver().getType(fileUri))), originalFile );
+
+           MultipartBody.Part file = MultipartBody.Part.createFormData("image", originalFile.getName(), filePart);
+
+           //making api call
+           NotesService notesService = ServiceBuilder.buildService(NotesService.class);
+           Call<ApiResponse> uploadImage = notesService.upload(String.format("Bearer %s", token), file);
+
+           uploadImage.enqueue(new Callback<ApiResponse>() {
+               @Override
+               public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                   if (response.isSuccessful()){
+                       Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_SHORT);
+                       Log.d(TAG, "onResponse: "+response.body().getResponse());
+
+                       Intent intent=new Intent(UploadImageActivity.this,LoginActivity.class);
+                       startActivity(intent);
+                       finish();
+                   }
+               }
+
+               @Override
+               public void onFailure(Call<ApiResponse> call, Throwable t) {
+                   Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                   Log.e(TAG, "onFailure: ", t);
+               }
+           });
+       }else{
+           Toast.makeText(getApplicationContext(), "Please Upload a photo", Toast.LENGTH_SHORT);
+       }
     }
 
-    //Requesting permission
-    private void requestStoragePermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-            return;
 
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            Toast.makeText(UploadImageActivity.this, "You will not be able to upload your profile", Toast.LENGTH_SHORT).show();
-        }
-        //And finally ask for the permission
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
-    }
 
-    //This method will be called when the user will tap on allow or deny
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        //Checking the request code of our request
-        if (requestCode == STORAGE_PERMISSION_CODE) {
-
-            //If permission is granted
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //Displaying a toast
-                Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
-            } else {
-                //Displaying another toast if permission is not granted
-                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
 
 }

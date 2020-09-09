@@ -11,6 +11,16 @@ import android.widget.Button;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.notika.services.NotesService;
+import com.example.notika.services.ServiceBuilder;
+import com.example.notika.services.TokenRenewInterceptor;
+
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class SettingsActivity extends AppCompatActivity {
     Switch switch_darkmode;
     Button mlogout;
@@ -26,9 +36,35 @@ public class SettingsActivity extends AppCompatActivity {
         mlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(SettingsActivity.this,LoginActivity.class);
-                startActivity(intent);
-                finish();
+
+                String token = TokenRenewInterceptor.getToken(getApplicationContext());
+
+                NotesService notesService = ServiceBuilder.buildService(NotesService.class);
+                Call<Void> logout = notesService.delete(String.format("Bearer %s", token));
+
+                logout.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()){
+                            Intent intent=new Intent(SettingsActivity.this,LoginActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            TokenRenewInterceptor.resetAllPreferences(getApplicationContext());
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        if(t instanceof IOException) {
+                            Toast.makeText(getApplicationContext(), "Internet connection lost", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
             }
         });
 

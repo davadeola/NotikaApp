@@ -27,13 +27,14 @@
         android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/error_message_signup"
-        android:textColor="@color/colorTextError"
-        android:gravity="center"
-        android:text=""/>
+        <TextView
+            android:id="@+id/error_message_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/colorTextError"
+            android:layout_marginBottom="16dp"/>
 
     <TextView
         android:id="@+id/username_textView"
