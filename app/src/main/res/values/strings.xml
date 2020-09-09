@@ -23,6 +23,8 @@
     <string name="settings">Settings</string>
     <string name="jacinta">Jacinta</string>
     <string name="nikita">Nikita</string>
+    <string name="font">Font</string>
+    <string name="logout">LOGOUT</string>
     <string name="check_input">Please, check your input</string>
     <string name="wrong">Something went wrong</string>
     <string name="image_to_text">Image to Text</string>

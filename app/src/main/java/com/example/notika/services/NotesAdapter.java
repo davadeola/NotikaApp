@@ -134,9 +134,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             PrettyTime prettyTime = new PrettyTime();
 
             try {
-
                 date.setText(prettyTime.format(inputFormat.parse(currentNote.getLastEdited())));
-                Log.d("DateFormat", inputFormat.parse(currentNote.getLastEdited()).toString());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
