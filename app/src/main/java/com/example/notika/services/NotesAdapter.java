@@ -121,11 +121,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             isFavorite = currentNote.isFavorite();
 
             //format the date string
-
             PrettyTime prettyTime = new PrettyTime(Locale.getDefault());
+
+
 
             try {
                 date.setText(prettyTime.format(inputFormat.parse(currentNote.getLastEdited())));
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
