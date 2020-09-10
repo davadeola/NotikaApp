@@ -90,7 +90,8 @@ public class UploadImageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 uploadMultipart(filePath);
 
-
+                btnUpload.setVisibility(View.INVISIBLE);
+                btnSkip.setVisibility(View.INVISIBLE);
             }
         });
         btnSkip.setOnClickListener(new View.OnClickListener() {
