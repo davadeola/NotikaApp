@@ -4,6 +4,7 @@ import androidx.annotation.FontRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -33,12 +34,20 @@ public class SettingsActivity extends AppCompatActivity {
     Switch switch_darkmode;
     Button mlogout;
 
-
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+
+        toolbar = findViewById(R.id.include);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle("Your Profile");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         switch_darkmode=findViewById(R.id.switch1);
         mlogout=findViewById(R.id.btn_logout);
         Spinner spinner = findViewById(R.id.spinner2);

@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.nav_favorites:
+            case R.id.nav_scan:
                 Intent i=new Intent(MainActivity.this,TextRecognitionActivity.class);
                 startActivity(i);
                 break;

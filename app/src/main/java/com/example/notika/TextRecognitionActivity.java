@@ -2,6 +2,7 @@ package com.example.notika;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -42,6 +43,7 @@ public class TextRecognitionActivity extends AppCompatActivity {
     private ImageView imgCapture;
     private String category="Personal", title, body;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,12 @@ public class TextRecognitionActivity extends AppCompatActivity {
         mRecText=findViewById(R.id.tv_RecogText);
         imgCapture=findViewById(R.id.img_capture);
         btnNote.setVisibility(View.GONE);
+
+        toolbar = findViewById(R.id.include);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle("Image to Text");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         btnSnap.setOnClickListener(new View.OnClickListener() {
             @Override

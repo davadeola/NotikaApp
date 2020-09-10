@@ -1,77 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TextRecognitionActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar_layout" />
+
+
+
+    <ImageView
+        android:id="@+id/img_capture"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:src="@drawable/ic_takepic"
+        app:layout_constraintBottom_toTopOf="@+id/tv_RecogText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tv_RecogText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/montserrat"
+        android:textColor="#000"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_note"
+        app:layout_constraintEnd_toEndOf="@+id/img_capture"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/img_capture"
+        app:layout_constraintTop_toBottomOf="@+id/img_capture" />
+
+    <Button
+        android:id="@+id/btn_note"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingTop="20dp"
-            android:text="AI Image Processing"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textSize="25sp" />
-        <ImageView
-            android:id="@+id/img_capture"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_takepic"/>
-        <TextView
-            android:id="@+id/tv_RecogText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="#000"
-            android:fontFamily="@font/montserrat"
-            android:text="Recognized text"/>
-        <Button
-            android:id="@+id/btn_note"
-            android:layout_marginTop="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_gravity="center"
-            android:text="Add note"
-            android:background="@color/colorPrimary"/>
+        android:layout_marginBottom="64dp"
+        android:background="@color/colorPrimary"
+        android:text="Add note"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btn_fetch"
+        app:layout_constraintEnd_toEndOf="@+id/tv_RecogText"
+        app:layout_constraintStart_toStartOf="@+id/tv_RecogText" />
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_snap"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:weightSum="2">
-        <Button
-            android:id="@+id/btn_snap"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:text="Take Photo"
-            android:background="@color/colorPrimary"/>
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/colorPrimary"
+        android:text="Take Photo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_fetch"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/btn_fetch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/cardview_light_background"
-            android:text="Fetch Text"
-            android:background="@color/cardview_shadow_start_color"/>
-    </LinearLayout>
+    <Button
+        android:id="@+id/btn_fetch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/colorPrimaryText"
+        android:text="Fetch Text"
+        android:textColor="@color/cardview_light_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_snap" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
