@@ -156,9 +156,11 @@ displayTextFromImage(text);
 
     private void displayTextFromImage(Text text) {
         String resultText = text.getText();
+        String finalText ="";
         for (Text.TextBlock block : text.getTextBlocks()) {
             String blockText = block.getText();
-            mRecText.setText(blockText);
+            finalText = finalText + blockText;
+
             Point[] blockCornerPoints = block.getCornerPoints();
             Rect blockFrame = block.getBoundingBox();
             for (Text.Line line : block.getLines()) {
@@ -172,6 +174,7 @@ displayTextFromImage(text);
                 }
             }
         }
+        mRecText.setText(finalText);
     }
 
 }

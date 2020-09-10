@@ -73,6 +73,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 Intent i  = new Intent(SignUpActivity.this, UploadImageActivity.class);
                                 TokenRenewInterceptor.saveToken(response.body().getResponse(), getApplicationContext());
+                                TokenRenewInterceptor.saveUserName(mUserName.getText().toString(), getApplicationContext());
                                 Log.d("Token", response.body().getResponse());
                                 startActivity(i);
                                 finish();

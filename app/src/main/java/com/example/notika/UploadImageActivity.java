@@ -50,7 +50,7 @@ import retrofit2.Response;
 
 public class UploadImageActivity extends AppCompatActivity {
     public ImageView imgUpload;
-    public Button btnUpload;
+    public Button btnUpload, btnSkip;
     private String TAG = "IN UPLOAD";
 
 
@@ -76,7 +76,7 @@ public class UploadImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upload_image);
         imgUpload = findViewById(R.id.img_uploadProfile);
         btnUpload = findViewById(R.id.btn_upload);
-
+        btnSkip = findViewById(R.id.btn_skip);
 
         imgUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +91,13 @@ public class UploadImageActivity extends AppCompatActivity {
                 uploadMultipart(filePath);
 
 
+            }
+        });
+        btnSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(UploadImageActivity.this,MainActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -148,6 +155,7 @@ public class UploadImageActivity extends AppCompatActivity {
                public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                    if (response.isSuccessful()){
                        Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_SHORT);
+                       TokenRenewInterceptor.saveImageUrl(response.body().getResponse(), getApplicationContext());
                        Log.d(TAG, "onResponse: "+response.body().getResponse());
 
                        Intent intent=new Intent(UploadImageActivity.this,LoginActivity.class);
